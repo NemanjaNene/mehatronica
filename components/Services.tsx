@@ -1,7 +1,8 @@
 'use client';
 
-import { Wrench, Package, Settings, Zap, Shield, Clock, BookOpen, Scissors } from 'lucide-react';
+import { Wrench, Package, Settings, Zap, Shield, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 const services = [
   {
@@ -9,40 +10,54 @@ const services = [
     title: 'Machine Service & Repair',
     description: 'Expert maintenance and repair of Müller Martini, Kolbus, and Hörauf printing machines. Fast response time and professional diagnostics.',
     features: ['Hardcover machines', 'Three-knife trimmers', 'Binding systems'],
+    stats: '200+ repairs',
+    bgImage: '/images/x800_muellermartini-diamant-11862325.webp',
   },
   {
     icon: Settings,
     title: 'Installation & Dismantling',
     description: 'Professional installation and relocation services for industrial machinery. Complete project management from start to finish.',
     features: ['Machine relocation', 'Technical setup', 'Safety compliance'],
+    stats: '50+ installations',
+    bgImage: '/images/Muller-Martini-Diamant-MC-35-7-scaled.webp',
   },
   {
     icon: Package,
     title: 'Replacement Parts',
     description: 'High-quality replacement parts for all major printing machine brands. Fast delivery and expert consultation.',
     features: ['Original parts', 'Quality alternatives', 'Fast delivery'],
+    stats: '1000+ parts',
+    bgImage: '/images/muller-martini-diamant-mc-30.webp',
   },
   {
     icon: Zap,
     title: 'Emergency Support',
     description: '24/7 emergency support for critical machine failures. Minimize downtime with our rapid response team.',
     features: ['24/7 availability', 'Remote diagnostics', 'On-site service'],
+    stats: '<2h response',
+    bgImage: '/images/x800_muellermartini-zenith-s-450470.webp',
   },
   {
     icon: Shield,
     title: 'Preventive Maintenance',
     description: 'Regular maintenance programs to prevent breakdowns and extend machine lifespan. Customized service plans.',
     features: ['Scheduled inspections', 'Performance optimization', 'Extended warranty'],
+    stats: '100+ contracts',
+    bgImage: '/images/thorium-APO0TCVHBv0-unsplash.jpg',
   },
   {
     icon: Clock,
     title: 'Modernization & Upgrades',
     description: 'Upgrade older machines with modern technology. Improve efficiency and extend equipment life.',
     features: ['Technology updates', 'Automation', 'Performance boost'],
+    stats: '30+ upgrades',
+    bgImage: '/images/futuristic-machinery-in-production-line.webp',
   },
 ];
 
 export default function Services() {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   return (
     <section id="services" className="section-padding bg-gray-50">
       <div className="container-custom">
@@ -67,49 +82,93 @@ export default function Services() {
 
         {/* Services Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="card p-8 group hover:-translate-y-2"
-            >
-              <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors duration-300">
-                <service.icon className="w-8 h-8 text-primary group-hover:text-white transition-colors duration-300" />
-              </div>
-              
-              <h3 className="text-xl font-bold mb-4 text-dark">
-                {service.title}
-              </h3>
-              
-              <p className="text-gray-600 mb-6 leading-relaxed">
-                {service.description}
-              </p>
+          {services.map((service, index) => {
+            const isHovered = hoveredIndex === index;
+            const isOtherHovered = hoveredIndex !== null && hoveredIndex !== index;
+            
+            return (
+              <motion.div
+                key={service.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                whileHover={{ 
+                  y: -12,
+                  scale: 1.05,
+                  transition: { duration: 0.3 }
+                }}
+                className="relative group overflow-hidden rounded-2xl cursor-pointer"
+                style={{
+                  opacity: isOtherHovered ? 0.4 : 1,
+                  filter: isOtherHovered ? 'blur(2px) grayscale(50%)' : 'none',
+                  transition: 'all 0.4s ease-in-out'
+                }}
+              >
+                {/* Background Image - prikazuje se SAMO na hover */}
+                <div className={`absolute inset-0 z-0 transition-opacity duration-500 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+                  <img
+                    src={service.bgImage}
+                    alt={service.title}
+                    className="w-full h-full object-cover"
+                  />
+                  {/* Gradient overlay - svetliji za bolju vidljivost */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-secondary/70 via-secondary-dark/60 to-primary/70" />
+                </div>
 
-              <ul className="space-y-2">
-                {service.features.map((feature) => (
-                  <li key={feature} className="flex items-center text-sm text-gray-700">
-                    <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-3" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
+                {/* Card Content */}
+                <div className={`relative p-8 h-full transition-all duration-300 ${isHovered ? 'bg-transparent' : 'bg-white shadow-lg border border-gray-100'}`}>
+                  
+                  {/* Icon */}
+                  <div className={`w-16 h-16 rounded-xl flex items-center justify-center mb-6 relative transition-all duration-300 ${isHovered ? 'bg-white/20 backdrop-blur-sm' : 'bg-primary/10'}`}>
+                    <service.icon className={`w-8 h-8 transition-colors duration-300 ${isHovered ? 'text-white' : 'text-primary'}`} />
+                  </div>
 
-              <div className="mt-6 pt-6 border-t border-gray-100">
-                <a
-                  href="#contact"
-                  className="text-primary font-semibold text-sm hover:text-primary-dark transition-colors inline-flex items-center"
-                >
-                  Learn More
-                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
-              </div>
-            </motion.div>
-          ))}
+                  {/* Stats badge */}
+                  <div className="absolute top-6 right-6">
+                    <div className={`text-xs font-bold px-3 py-1.5 rounded-full shadow-lg transition-all duration-300 ${isHovered ? 'bg-white/20 text-white backdrop-blur-sm' : 'bg-secondary text-white'}`}>
+                      {service.stats}
+                    </div>
+                  </div>
+                  
+                  <h3 className={`text-xl font-bold mb-4 transition-colors duration-300 ${isHovered ? 'text-white drop-shadow-lg' : 'text-dark'}`}>
+                    {service.title}
+                  </h3>
+                  
+                  <p className={`mb-6 leading-relaxed font-medium transition-colors duration-300 ${isHovered ? 'text-white drop-shadow-md' : 'text-gray-600'}`}>
+                    {service.description}
+                  </p>
+
+                  {/* Features */}
+                  <ul className="space-y-2 mb-6">
+                    {service.features.map((feature) => (
+                      <li key={feature} className="flex items-center text-sm">
+                        <div className={`w-1.5 h-1.5 rounded-full mr-3 transition-colors duration-300 ${isHovered ? 'bg-white' : 'bg-secondary'}`} />
+                        <span className={`transition-colors duration-300 font-medium ${isHovered ? 'text-white drop-shadow-md' : 'text-gray-700'}`}>
+                          {feature}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Learn more link */}
+                  <div className="mt-auto pt-6 border-t transition-colors duration-300" style={{ borderColor: isHovered ? 'rgba(255,255,255,0.2)' : 'rgba(229,231,235,1)' }}>
+                    <a
+                      href="#contact"
+                      className={`font-bold text-sm transition-colors inline-flex items-center ${isHovered ? 'text-white drop-shadow-md' : 'text-primary'}`}
+                    >
+                      Learn More
+                      <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Machine Expertise Banner */}
@@ -162,13 +221,9 @@ export default function Services() {
                   </h4>
                 </div>
                 <ul className="space-y-3">
-                  {['Diamant (all generations)', 'Ventura (all generations)', 'Collibri', 'Ribbon', 'Vesta', 'Kolbus RF', 'Hörauf Compact', 'Hörauf Universal'].map((machine, idx) => (
-                    <motion.li
+                  {['Diamant (all generations)', 'Ventura (all generations)', 'Collibri', 'Ribbon', 'Vesta', 'Kolbus RF', 'Hörauf Compact', 'Hörauf Universal'].map((machine) => (
+                    <li
                       key={machine}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.3, delay: 0.1 + idx * 0.05 }}
                       className="flex items-start space-x-3 group"
                     >
                       <div className="w-5 h-5 bg-secondary/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-secondary transition-colors">
@@ -177,7 +232,7 @@ export default function Services() {
                         </svg>
                       </div>
                       <span className="text-white/90 group-hover:text-white transition-colors">{machine}</span>
-                    </motion.li>
+                    </li>
                   ))}
                 </ul>
               </motion.div>
@@ -192,20 +247,16 @@ export default function Services() {
               >
                 <div className="flex items-center space-x-3 mb-5">
                   <div className="w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center">
-                    <Scissors className="w-5 h-5 text-secondary" />
+                    <Package className="w-5 h-5 text-secondary" />
                   </div>
                   <h4 className="text-xl font-bold text-secondary uppercase tracking-wide">
                     Trimmers
                   </h4>
                 </div>
                 <ul className="space-y-3">
-                  {['Esprit', 'Merit', 'Zenith', 'Orbit', 'Solit'].map((machine, idx) => (
-                    <motion.li
+                  {['Esprit', 'Merit', 'Zenith', 'Orbit', 'Solit'].map((machine) => (
+                    <li
                       key={machine}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.3, delay: 0.1 + idx * 0.05 }}
                       className="flex items-start space-x-3 group"
                     >
                       <div className="w-5 h-5 bg-secondary/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-secondary transition-colors">
@@ -214,7 +265,7 @@ export default function Services() {
                         </svg>
                       </div>
                       <span className="text-white/90 group-hover:text-white transition-colors">{machine}</span>
-                    </motion.li>
+                    </li>
                   ))}
                 </ul>
               </motion.div>
@@ -229,20 +280,16 @@ export default function Services() {
               >
                 <div className="flex items-center space-x-3 mb-5">
                   <div className="w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center">
-                    <BookOpen className="w-5 h-5 text-secondary" />
+                    <Wrench className="w-5 h-5 text-secondary" />
                   </div>
                   <h4 className="text-xl font-bold text-secondary uppercase tracking-wide">
                     Binders
                   </h4>
                 </div>
                 <ul className="space-y-3">
-                  {['Acoro', 'Bolero', 'Corona', 'Pantera'].map((machine, idx) => (
-                    <motion.li
+                  {['Acoro', 'Bolero', 'Corona', 'Pantera'].map((machine) => (
+                    <li
                       key={machine}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.3, delay: 0.1 + idx * 0.05 }}
                       className="flex items-start space-x-3 group"
                     >
                       <div className="w-5 h-5 bg-secondary/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-secondary transition-colors">
@@ -251,7 +298,7 @@ export default function Services() {
                         </svg>
                       </div>
                       <span className="text-white/90 group-hover:text-white transition-colors">{machine}</span>
-                    </motion.li>
+                    </li>
                   ))}
                 </ul>
               </motion.div>
