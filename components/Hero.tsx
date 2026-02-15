@@ -8,11 +8,11 @@ export default function Hero() {
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/95 to-dark/80 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-dark/85 via-dark/75 to-dark/60 z-10" />
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('/images/jeswin-thomas-TUU21l-W1FE-unsplash.jpg')",
+            backgroundImage: "url('/images/mechanical-engineering-project.webp')",
           }}
         />
       </div>

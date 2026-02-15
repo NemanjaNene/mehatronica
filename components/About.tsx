@@ -78,8 +78,8 @@ export default function About() {
                 </div>
                 <div className="h-64 bg-gradient-to-br from-secondary to-secondary-dark rounded-xl overflow-hidden">
                   <img
-                    src="/images/1418887497_3.webp"
-                    alt="Machine maintenance"
+                    src="/images/futuristic-machinery-in-production-line.webp"
+                    alt="Futuristic production line"
                     className="w-full h-full object-cover"
                   />
                 </div>
