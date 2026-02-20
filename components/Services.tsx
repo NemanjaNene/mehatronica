@@ -266,14 +266,14 @@ export default function Services() {
             </div>
 
             {/* Machine categories - 2 column layout */}
-            <div className="grid md:grid-cols-2 gap-8 mb-12 max-h-[600px]">
+            <div className="grid md:grid-cols-2 gap-8 mb-12 md:max-h-[600px]">
               {/* ALL MACHINES IN ONE CARD - LEFT */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300 overflow-y-auto max-h-[600px]"
+                className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300 md:overflow-y-auto md:max-h-[600px]"
               >
                 {/* HARDCOVER */}
                 <div className="mb-6">
@@ -363,7 +363,7 @@ export default function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 relative h-[600px]"
+                className="bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 relative h-64 md:h-[600px]"
               >
                 <MachineSlideshow />
               </motion.div>

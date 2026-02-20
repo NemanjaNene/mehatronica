@@ -51,11 +51,11 @@ export default function Contact() {
               
               <div className="flex flex-col items-center">
                 {/* QR Code Placeholder */}
-                <div className="bg-white rounded-2xl p-6 mb-6">
+                <div className="bg-white rounded-2xl p-4 md:p-6 mb-6">
                   <img
                     src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=tel:+48666211626"
                     alt="QR Code - Call us"
-                    className="w-64 h-64"
+                    className="w-48 h-48 md:w-64 md:h-64"
                   />
                 </div>
                 

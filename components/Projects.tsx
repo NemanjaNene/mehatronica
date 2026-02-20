@@ -57,25 +57,25 @@ function ProjectModal({ project, isOpen, onClose }: { project: typeof projects[0
           />
           
           {/* Modal */}
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-2 md:p-4">
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ duration: 0.3 }}
-              className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+              className="bg-white rounded-2xl md:rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
               <button
                 onClick={onClose}
-                className="absolute top-6 right-6 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 transition-colors z-10"
+                className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 transition-colors z-10"
               >
                 <X className="w-5 h-5 text-dark" />
               </button>
 
               {/* Image */}
-              <div className="relative h-96 overflow-hidden rounded-t-3xl">
+              <div className="relative h-48 md:h-96 overflow-hidden rounded-t-2xl md:rounded-t-3xl">
                 <img
                   src={project.image}
                   alt={project.title}
@@ -92,7 +92,7 @@ function ProjectModal({ project, isOpen, onClose }: { project: typeof projects[0
               </div>
 
               {/* Content */}
-              <div className="p-8 md:p-12">
+              <div className="p-6 md:p-8 lg:p-12">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-3xl md:text-4xl font-bold text-dark">
                     {project.title}

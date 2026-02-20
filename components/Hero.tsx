@@ -86,7 +86,7 @@ export default function Hero() {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-8 mt-12 pt-12 border-t border-white/20">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-12 pt-12 border-t border-white/20">
               <div>
                 <h3 className="text-4xl font-bold text-white mb-2">15+</h3>
                 <p className="text-gray-400 text-sm">Years Experience</p>
