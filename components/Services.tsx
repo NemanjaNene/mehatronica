@@ -1,8 +1,71 @@
 'use client';
 
 import { Wrench, Package, Settings, Zap, Shield, Clock } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
+
+// Slideshow component
+function MachineSlideshow() {
+  const images = [
+    '/images/x800_muellermartini-diamant-11862325.webp',
+    '/images/Muller-Martini-Diamant-MC-35-7-scaled.webp',
+    '/images/muller-martini-diamant-mc-30.webp',
+    '/images/x800_muellermartini-zenith-s-450470.webp',
+    '/images/x800_muellermartini-zenith-s-450466.webp',
+    '/images/x800_muellermartini-zenith-s-450467.webp',
+    '/images/x800_muellermartini-zenith-s-460210.webp',
+    '/images/thorium-APO0TCVHBv0-unsplash.jpg',
+    '/images/futuristic-machinery-in-production-line.webp',
+    '/images/1418887497_3.webp',
+    '/images/x800_muellermartini-diamant-12398885.webp',
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 3000); // 3 sekunde
+
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  return (
+    <div className="relative w-full h-full">
+      <AnimatePresence>
+        <motion.div
+          key={currentIndex}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.8 }}
+          className="absolute inset-0"
+        >
+          <img
+            src={images[currentIndex]}
+            alt={`Machine ${currentIndex + 1}`}
+            className="w-full h-full object-cover"
+          />
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent" />
+        </motion.div>
+      </AnimatePresence>
+      
+      {/* Indicators */}
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
+        {images.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              index === currentIndex ? 'bg-secondary w-8' : 'bg-white/50'
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 const services = [
   {
@@ -202,105 +265,107 @@ export default function Services() {
               </p>
             </div>
 
-            {/* Machine categories */}
-            <div className="grid md:grid-cols-3 gap-8 mb-12">
-              {/* HARDCOVER */}
+            {/* Machine categories - 2 column layout */}
+            <div className="grid md:grid-cols-2 gap-8 mb-12 max-h-[600px]">
+              {/* ALL MACHINES IN ONE CARD - LEFT */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300"
+                className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300 overflow-y-auto max-h-[600px]"
               >
-                <div className="flex items-center space-x-3 mb-5">
-                  <div className="w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center">
-                    <Settings className="w-5 h-5 text-secondary" />
+                {/* HARDCOVER */}
+                <div className="mb-6">
+                  <div className="flex items-center space-x-3 mb-4">
+                    <div className="w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center">
+                      <Settings className="w-5 h-5 text-secondary" />
+                    </div>
+                    <h4 className="text-xl font-bold text-secondary uppercase tracking-wide">
+                      Hardcover
+                    </h4>
                   </div>
-                  <h4 className="text-xl font-bold text-secondary uppercase tracking-wide">
-                    Hardcover
-                  </h4>
+                  <ul className="space-y-2">
+                    {['Diamant (all generations)', 'Ventura (all generations)', 'Collibri', 'Ribbon', 'Vesta', 'Kolbus RF', 'Kolbus BF', 'Hörauf Compact', 'Hörauf Universal'].map((machine) => (
+                      <li
+                        key={machine}
+                        className="flex items-start space-x-3 group"
+                      >
+                        <div className="w-5 h-5 bg-secondary/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-secondary transition-colors">
+                          <svg className="w-3 h-3 text-secondary group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                        <span className="text-white/90 group-hover:text-white transition-colors">{machine}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <ul className="space-y-3">
-                  {['Diamant (all generations)', 'Ventura (all generations)', 'Collibri', 'Ribbon', 'Vesta', 'Kolbus RF', 'Hörauf Compact', 'Hörauf Universal'].map((machine) => (
-                    <li
-                      key={machine}
-                      className="flex items-start space-x-3 group"
-                    >
-                      <div className="w-5 h-5 bg-secondary/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-secondary transition-colors">
-                        <svg className="w-3 h-3 text-secondary group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-white/90 group-hover:text-white transition-colors">{machine}</span>
-                    </li>
-                  ))}
-                </ul>
+
+                {/* TRIMMERS */}
+                <div className="mb-6 pt-6 border-t border-white/10">
+                  <div className="flex items-center space-x-3 mb-4">
+                    <div className="w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center">
+                      <Package className="w-5 h-5 text-secondary" />
+                    </div>
+                    <h4 className="text-xl font-bold text-secondary uppercase tracking-wide">
+                      Trimmers
+                    </h4>
+                  </div>
+                  <ul className="space-y-2">
+                    {['Esprit', 'Merit', 'Zenith', 'Orbit', 'Solit', 'Kolbus HD', 'Granit'].map((machine) => (
+                      <li
+                        key={machine}
+                        className="flex items-start space-x-3 group"
+                      >
+                        <div className="w-5 h-5 bg-secondary/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-secondary transition-colors">
+                          <svg className="w-3 h-3 text-secondary group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                        <span className="text-white/90 group-hover:text-white transition-colors">{machine}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* BINDERS */}
+                <div className="pt-6 border-t border-white/10">
+                  <div className="flex items-center space-x-3 mb-4">
+                    <div className="w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center">
+                      <Wrench className="w-5 h-5 text-secondary" />
+                    </div>
+                    <h4 className="text-xl font-bold text-secondary uppercase tracking-wide">
+                      Binders
+                    </h4>
+                  </div>
+                  <ul className="space-y-2">
+                    {['Acoro', 'Bolero', 'Corona', 'Pantera', 'Kolbus KM', 'Kolbus DA', 'Alegro'].map((machine) => (
+                      <li
+                        key={machine}
+                        className="flex items-start space-x-3 group"
+                      >
+                        <div className="w-5 h-5 bg-secondary/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-secondary transition-colors">
+                          <svg className="w-3 h-3 text-secondary group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                        <span className="text-white/90 group-hover:text-white transition-colors">{machine}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </motion.div>
 
-              {/* THREE-KNIFE TRIMMERS */}
+              {/* IMAGE SLIDESHOW - RIGHT */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300"
+                className="bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 relative h-[600px]"
               >
-                <div className="flex items-center space-x-3 mb-5">
-                  <div className="w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center">
-                    <Package className="w-5 h-5 text-secondary" />
-                  </div>
-                  <h4 className="text-xl font-bold text-secondary uppercase tracking-wide">
-                    Trimmers
-                  </h4>
-                </div>
-                <ul className="space-y-3">
-                  {['Esprit', 'Merit', 'Zenith', 'Orbit', 'Solit'].map((machine) => (
-                    <li
-                      key={machine}
-                      className="flex items-start space-x-3 group"
-                    >
-                      <div className="w-5 h-5 bg-secondary/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-secondary transition-colors">
-                        <svg className="w-3 h-3 text-secondary group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-white/90 group-hover:text-white transition-colors">{machine}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-
-              {/* BINDERS */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300"
-              >
-                <div className="flex items-center space-x-3 mb-5">
-                  <div className="w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center">
-                    <Wrench className="w-5 h-5 text-secondary" />
-                  </div>
-                  <h4 className="text-xl font-bold text-secondary uppercase tracking-wide">
-                    Binders
-                  </h4>
-                </div>
-                <ul className="space-y-3">
-                  {['Acoro', 'Bolero', 'Corona', 'Pantera'].map((machine) => (
-                    <li
-                      key={machine}
-                      className="flex items-start space-x-3 group"
-                    >
-                      <div className="w-5 h-5 bg-secondary/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-secondary transition-colors">
-                        <svg className="w-3 h-3 text-secondary group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-white/90 group-hover:text-white transition-colors">{machine}</span>
-                    </li>
-                  ))}
-                </ul>
+                <MachineSlideshow />
               </motion.div>
             </div>
 

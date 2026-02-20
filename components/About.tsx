@@ -26,11 +26,28 @@ export default function About() {
               across Europe requiring professional maintenance, installation, and repair services 
               for complex industrial machinery.
             </p>
-            <p className="text-gray-600 mb-8 leading-relaxed">
-              With over 15 years of specialized experience in printing and binding equipment, 
-              we have built a reputation for excellence, reliability, and technical expertise. 
-              Our team of certified technicians ensures your machinery operates at peak performance.
-            </p>
+            {/* Additional Services */}
+            <div className="bg-gradient-to-br from-primary/5 to-secondary/5 backdrop-blur-sm rounded-2xl p-6 mb-8 border border-primary/10">
+              <div className="space-y-3">
+                {[
+                  'We are able to repair also other machines',
+                  'Programming',
+                  'Modifications of existing lines',
+                ].map((service, index) => (
+                  <motion.div
+                    key={service}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    className="flex items-center space-x-3"
+                  >
+                    <div className="w-2 h-2 bg-secondary rounded-full" />
+                    <span className="text-gray-700 font-medium">{service}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
 
             {/* Features List */}
             <div className="space-y-4 mb-8">

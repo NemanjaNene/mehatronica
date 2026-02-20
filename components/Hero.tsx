@@ -1,20 +1,53 @@
 'use client';
 
 import { ArrowRight, Play } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
+
+// Hero Background Slideshow
+function HeroBackgroundSlideshow() {
+  const images = [
+    '/images/mechanical-engineering-project.webp',
+    '/images/futuristic-machinery-in-production-line.webp',
+    '/images/thorium-APO0TCVHBv0-unsplash.jpg',
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 5000); // 5 sekundi
+
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  return (
+    <div className="absolute inset-0">
+      <AnimatePresence>
+        <motion.div
+          key={currentIndex}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2 }}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('${images[currentIndex]}')`,
+          }}
+        />
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export default function Hero() {
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background Image with Overlay */}
+      {/* Background Image Slideshow with Overlay */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-r from-dark/85 via-dark/75 to-dark/60 z-10" />
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: "url('/images/mechanical-engineering-project.webp')",
-          }}
-        />
+        <HeroBackgroundSlideshow />
       </div>
 
       {/* Content */}

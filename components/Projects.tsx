@@ -1,7 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, X } from 'lucide-react';
+import { useState } from 'react';
 
 const projects = [
   {
@@ -38,7 +39,130 @@ const projects = [
   },
 ];
 
+// Project Modal Component
+function ProjectModal({ project, isOpen, onClose }: { project: typeof projects[0] | null; isOpen: boolean; onClose: () => void }) {
+  if (!project) return null;
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-dark/80 backdrop-blur-sm z-50"
+          />
+          
+          {/* Modal */}
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ duration: 0.3 }}
+              className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <button
+                onClick={onClose}
+                className="absolute top-6 right-6 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 transition-colors z-10"
+              >
+                <X className="w-5 h-5 text-dark" />
+              </button>
+
+              {/* Image */}
+              <div className="relative h-96 overflow-hidden rounded-t-3xl">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-dark/60 to-transparent" />
+                
+                {/* Category Badge */}
+                <div className="absolute top-6 left-6">
+                  <span className="bg-secondary text-white text-sm font-semibold px-5 py-2 rounded-full">
+                    {project.category}
+                  </span>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="p-8 md:p-12">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-3xl md:text-4xl font-bold text-dark">
+                    {project.title}
+                  </h2>
+                </div>
+
+                <div className="flex items-center space-x-6 mb-8 pb-6 border-b border-gray-200">
+                  <div>
+                    <p className="text-sm text-gray-500 mb-1">Year</p>
+                    <p className="text-lg font-semibold text-dark">{project.year}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500 mb-1">Client</p>
+                    <p className="text-lg font-semibold text-dark">{project.client}</p>
+                  </div>
+                </div>
+
+                <div className="prose prose-lg max-w-none">
+                  <p className="text-gray-600 text-lg leading-relaxed mb-6">
+                    {project.description}
+                  </p>
+                  
+                  <h3 className="text-xl font-bold text-dark mb-4">Project Details</h3>
+                  <p className="text-gray-600 leading-relaxed mb-4">
+                    This project showcases our expertise in handling complex industrial machinery installations 
+                    and maintenance. Our team of certified technicians worked closely with the client to ensure 
+                    minimal downtime and maximum efficiency.
+                  </p>
+                  
+                  <div className="bg-gradient-to-br from-primary/5 to-secondary/5 rounded-xl p-6 mt-6">
+                    <h4 className="font-bold text-dark mb-3">Key Achievements</h4>
+                    <ul className="space-y-2">
+                      <li className="flex items-start">
+                        <div className="w-1.5 h-1.5 rounded-full bg-secondary mt-2 mr-3" />
+                        <span className="text-gray-700">Professional installation and setup</span>
+                      </li>
+                      <li className="flex items-start">
+                        <div className="w-1.5 h-1.5 rounded-full bg-secondary mt-2 mr-3" />
+                        <span className="text-gray-700">Minimal production downtime</span>
+                      </li>
+                      <li className="flex items-start">
+                        <div className="w-1.5 h-1.5 rounded-full bg-secondary mt-2 mr-3" />
+                        <span className="text-gray-700">Complete documentation and training</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+}
+
 export default function Projects() {
+  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = (project: typeof projects[0]) => {
+    setSelectedProject(project);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setTimeout(() => setSelectedProject(null), 300);
+  };
+
   return (
     <section id="projects" className="bg-white">
       <div className="container-custom">
@@ -73,11 +197,6 @@ export default function Projects() {
                 the fact that we conduct all services in-house with highly skilled technicians.
               </p>
 
-              <button className="btn-primary inline-flex items-center space-x-2 group">
-                <span>View All Projects</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </button>
-
               {/* Stats */}
               <div className="grid grid-cols-3 gap-4 mt-12 pt-8 border-t border-gray-200">
                 <div>
@@ -108,7 +227,10 @@ export default function Projects() {
                 className="group"
               >
                 {/* Project Image */}
-                <div className="relative h-96 overflow-hidden rounded-2xl mb-6">
+                <div 
+                  className="relative h-96 overflow-hidden rounded-2xl mb-6 cursor-pointer"
+                  onClick={() => openModal(project)}
+                >
                   <img
                     src={project.image}
                     alt={project.title}
@@ -156,19 +278,26 @@ export default function Projects() {
                   <p className="text-gray-600 leading-relaxed mb-4">
                     {project.description}
                   </p>
-                  <a
-                    href="#contact"
+                  <button
+                    onClick={() => openModal(project)}
                     className="text-primary font-semibold text-sm hover:text-primary-dark transition-colors inline-flex items-center group"
                   >
                     Learn More
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </a>
+                  </button>
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
       </div>
+
+      {/* Project Modal */}
+      <ProjectModal 
+        project={selectedProject} 
+        isOpen={isModalOpen} 
+        onClose={closeModal} 
+      />
     </section>
   );
 }

@@ -35,111 +35,57 @@ export default function Contact() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          {/* Left Side - Contact Information */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-6"
-          >
-            {/* Main Contact Card */}
-            <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-white mb-6">Contact Information</h3>
+        <div className="space-y-8">
+          {/* Top Row - QR Code and Form */}
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+            {/* Left Side - QR Code */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              {/* QR Code Card */}
+              <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 flex flex-col justify-center h-full">
+              <h3 className="text-2xl font-bold text-white mb-6 text-center">Quick Call QR Code</h3>
               
-              <div className="space-y-6">
-                {/* Phone */}
-                <div className="flex items-start space-x-4 group">
-                  <div className="w-14 h-14 bg-secondary/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-secondary transition-all duration-300">
-                    <Phone className="w-6 h-6 text-secondary group-hover:text-white transition-colors" />
-                  </div>
-                  <div>
-                    <p className="text-gray-400 text-sm mb-1">Call Us Directly</p>
-                    <a
-                      href="tel:+48666211626"
-                      className="text-white text-lg font-semibold hover:text-secondary transition-colors"
-                    >
-                      +48 666 211 626
-                    </a>
-                    <p className="text-gray-400 text-xs mt-1">Available 24/7 for emergencies</p>
-                  </div>
+              <div className="flex flex-col items-center">
+                {/* QR Code Placeholder */}
+                <div className="bg-white rounded-2xl p-6 mb-6">
+                  <img
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=tel:+48666211626"
+                    alt="QR Code - Call us"
+                    className="w-64 h-64"
+                  />
                 </div>
-
-                {/* Email */}
-                <div className="flex items-start space-x-4 group">
-                  <div className="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary transition-all duration-300">
-                    <Mail className="w-6 h-6 text-primary group-hover:text-white transition-colors" />
-                  </div>
-                  <div>
-                    <p className="text-gray-400 text-sm mb-1">Send Email</p>
-                    <a
-                      href="mailto:office@md-mechatronica.com"
-                      className="text-white text-lg font-semibold hover:text-primary transition-colors break-all"
-                    >
-                      office@md-mechatronica.com
-                    </a>
-                    <p className="text-gray-400 text-xs mt-1">We'll respond within 24 hours</p>
-                  </div>
-                </div>
-
-                {/* Location */}
-                <div className="flex items-start space-x-4 group">
-                  <div className="w-14 h-14 bg-secondary/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-secondary transition-all duration-300">
-                    <MapPin className="w-6 h-6 text-secondary group-hover:text-white transition-colors" />
-                  </div>
-                  <div>
-                    <p className="text-gray-400 text-sm mb-1">Visit Our Office</p>
-                    <p className="text-white font-semibold">
-                      Ul. Przedwiośnia 23<br />
-                      05-500 Piaseczno<br />
-                      Poland
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Business Hours Card */}
-            <div className="bg-gradient-to-br from-secondary/20 to-secondary/5 backdrop-blur-lg border border-secondary/30 rounded-2xl p-8">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-12 h-12 bg-secondary/20 rounded-lg flex items-center justify-center">
-                  <Clock className="w-6 h-6 text-secondary" />
-                </div>
-                <h3 className="text-xl font-bold text-white">Business Hours</h3>
-              </div>
-              
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-300">Monday - Friday</span>
-                  <span className="text-white font-semibold">8:00 - 18:00</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-300">Saturday</span>
-                  <span className="text-white font-semibold">9:00 - 14:00</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-300">Sunday</span>
-                  <span className="text-gray-500 font-semibold">Closed</span>
-                </div>
-                <div className="pt-4 border-t border-white/10">
+                
+                <p className="text-white font-semibold text-center mb-2">
+                  Scan to Call Us Directly
+                </p>
+                <p className="text-gray-400 text-sm text-center">
+                  Point your camera at the QR code to instantly call us
+                </p>
+                
+                <div className="mt-6 pt-6 border-t border-white/20 w-full">
                   <p className="text-secondary font-bold text-center">
-                    🚨 24/7 Emergency Support Available
+                    📱 +48 666 211 626
+                  </p>
+                  <p className="text-gray-400 text-xs text-center mt-1">
+                    Available 24/7 for emergencies
                   </p>
                 </div>
               </div>
             </div>
+            </motion.div>
 
-          </motion.div>
-
-          {/* Right Side - Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8">
+            {/* Right Side - Contact Form */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+            <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 h-full flex flex-col">
               <h3 className="text-2xl font-bold text-white mb-6">Send Us a Message</h3>
               
               <form className="space-y-5">
@@ -231,16 +177,60 @@ export default function Contact() {
                 </p>
               </form>
             </div>
+          </motion.div>
+          </div>
 
-            {/* Trust Badges */}
-            <div className="mt-6 grid grid-cols-2 gap-4">
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-4 text-center">
-                <p className="text-white font-semibold mb-1">Secure</p>
-                <p className="text-gray-400 text-xs">SSL Encrypted</p>
-              </div>
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-4 text-center">
-                <p className="text-white font-semibold mb-1">Fast Reply</p>
-                <p className="text-gray-400 text-xs">Within 24 Hours</p>
+          {/* Bottom Row - Contact Information (Full Width) */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <div className="bg-gradient-to-br from-secondary/20 to-secondary/5 backdrop-blur-lg border border-secondary/30 rounded-2xl p-8">
+              <div className="grid md:grid-cols-3 gap-8">
+                {/* Phone */}
+                <div className="flex flex-col items-center text-center group">
+                  <div className="w-16 h-16 bg-secondary/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-secondary transition-all duration-300">
+                    <Phone className="w-7 h-7 text-secondary group-hover:text-white transition-colors" />
+                  </div>
+                  <p className="text-gray-400 text-sm mb-2">Call Us Directly</p>
+                  <a
+                    href="tel:+48666211626"
+                    className="text-white text-xl font-bold hover:text-secondary transition-colors"
+                  >
+                    +48 666 211 626
+                  </a>
+                  <p className="text-gray-400 text-xs mt-2">Available 24/7 for emergencies</p>
+                </div>
+
+                {/* Email */}
+                <div className="flex flex-col items-center text-center group">
+                  <div className="w-16 h-16 bg-primary/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary transition-all duration-300">
+                    <Mail className="w-7 h-7 text-primary group-hover:text-white transition-colors" />
+                  </div>
+                  <p className="text-gray-400 text-sm mb-2">Send Email</p>
+                  <a
+                    href="mailto:office@md-mechatronica.com"
+                    className="text-white text-lg font-bold hover:text-primary transition-colors break-all"
+                  >
+                    office@md-mechatronica.com
+                  </a>
+                  <p className="text-gray-400 text-xs mt-2">We'll respond within 24 hours</p>
+                </div>
+
+                {/* Location */}
+                <div className="flex flex-col items-center text-center group">
+                  <div className="w-16 h-16 bg-secondary/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-secondary transition-all duration-300">
+                    <MapPin className="w-7 h-7 text-secondary group-hover:text-white transition-colors" />
+                  </div>
+                  <p className="text-gray-400 text-sm mb-2">Visit Our Office</p>
+                  <p className="text-white font-bold text-lg">
+                    Ul. Przedwiośnia 23<br />
+                    05-500 Piaseczno<br />
+                    Poland
+                  </p>
+                </div>
               </div>
             </div>
           </motion.div>
