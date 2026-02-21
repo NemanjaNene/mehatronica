@@ -31,7 +31,7 @@ export default function Contact() {
             Ready to Start Your <span className="text-secondary">Project?</span>
           </h2>
           <p className="text-gray-300 text-lg">
-            Contact us today and let's discuss how we can help with your machinery needs.
+            Contact us today and let&apos;s discuss how we can help with your machinery needs.
           </p>
         </motion.div>
 
@@ -216,7 +216,7 @@ export default function Contact() {
                   >
                     office@md-mechatronica.com
                   </a>
-                  <p className="text-gray-400 text-xs mt-2">We'll respond within 24 hours</p>
+                  <p className="text-gray-400 text-xs mt-2">We&apos;ll respond within 24 hours</p>
                 </div>
 
                 {/* Location */}
